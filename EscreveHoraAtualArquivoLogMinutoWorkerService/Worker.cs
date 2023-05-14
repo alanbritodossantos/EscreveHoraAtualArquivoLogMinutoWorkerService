@@ -23,7 +23,13 @@ namespace EscreveHoraAtualArquivoLogMinutoWorkerService
 
         private void WriteCurrentTimeToLogFile()
         {
-            string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
+            string logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
+            if (!Directory.Exists(logDirectory))
+            {
+                Directory.CreateDirectory(logDirectory);
+            }
+
+            string logFilePath = Path.Combine(logDirectory, "log.txt");
             using StreamWriter logFileWriter = new StreamWriter(logFilePath, true);
             logFileWriter.WriteLine($"{count} - Current Time: {DateTimeOffset.Now}");
             count++;
